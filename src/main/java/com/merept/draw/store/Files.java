@@ -18,7 +18,6 @@ import java.util.Date;
  */
 public class Files extends Drawing {
     private static int numbers = 0;
-    protected static final String USER = System.getProperty("user.dir");
 
     public static void InputIds(String path) {
         System.out.println("\n" + path + "\n");

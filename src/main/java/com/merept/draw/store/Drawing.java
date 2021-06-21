@@ -5,8 +5,6 @@ import com.merept.draw.utils.Utility;
 
 import java.util.ArrayList;
 
-import static com.merept.draw.store.Files.*;
-
 /**
  * <p>所属包名: com.merept.draw.store</p>
  * <p>项目名称: RandomDrawSys</p>
@@ -19,13 +17,14 @@ import static com.merept.draw.store.Files.*;
 public class Drawing {
     protected static final ArrayList<DrawingService> idIn = new ArrayList<>();
     protected static final ArrayList<DrawingService> idOut = new ArrayList<>();
+    private static final String USER = System.getProperty("user.dir");
     private static String path = USER + "\\sources\\input.txt";
 
     public static void byFile() {
         System.out.print("请输入文件路径(直接回车将使用默认路径) >\040");
         path = Utility.readString(path);
 
-        InputIds(path);
+        Files.InputIds(path);
 
         System.out.println("文件读取完成, 是否有需要删除的?");
         var slt = Utility.readConfirmSelection();
@@ -38,7 +37,7 @@ public class Drawing {
         var i = Utility.readInt();
         for (int j = 0; j < i; j++) drawPeople();
 
-        OutputIds();
+        Files.OutputIds();
     }
 
     private static void drawPeople() {
