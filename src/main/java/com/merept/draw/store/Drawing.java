@@ -22,7 +22,7 @@ public class Drawing {
     private static String path = USER + "\\sources\\input.txt";
 
     public static void byFile() {
-        System.out.print("请输入文件路径(直接回车将使用默认路径) > ");
+        System.out.print("请输入文件路径(直接回车将使用默认路径) >\040");
         path = Utility.readString(path);
 
         InputIds(path);
@@ -46,11 +46,10 @@ public class Drawing {
         var num = (int) (Math.random() * ran);
         var id = checkRepeatValue(num, ran);
         idOut.add(new DrawingService(id));
-
     }
 
     private static String checkRepeatValue(int num, int ran) {
-        if (idOut.size() == 0) return idIn.get(num).getId();
+        if (idOut.isEmpty()) return idIn.get(num).getId();
         for (int i = 0; i < idOut.size(); i++) {
             var id = idIn.get(num).getId();
             if (id.equals(idOut.get(i).getId())) {
@@ -64,7 +63,7 @@ public class Drawing {
     private static void removeId() {
         var id = " ";
         while (true) {
-            System.out.print("\n输入你想删除的信息(直接回车结束删除) > ");
+            System.out.print("\n输入你想删除的信息(直接回车结束删除) >\040");
             id = Utility.readString(null);
             if (id == null) break;
 
@@ -79,9 +78,8 @@ public class Drawing {
     }
 
     private static int findId(String id) {
-        for (int i = 0; i < idIn.size(); i++) {
+        for (int i = 0; i < idIn.size(); i++)
             if (id.equals(idIn.get(i).getId())) return i;
-        }
         return -1;
     }
 }

@@ -17,7 +17,7 @@ import java.util.Date;
  * @version 1.0
  */
 public class Files extends Drawing {
-    private static int lines = 0;
+    private static int numbers = 0;
     protected static final String USER = System.getProperty("user.dir");
 
     public static void InputIds(String path) {
@@ -33,9 +33,10 @@ public class Files extends Drawing {
             }
         } catch (IOException e) {
             System.out.println("找不到该文件");
+            emptyFile(path);
         }
 
-        if (idIn.size() == 0) {
+        if (idIn.isEmpty()) {
             System.out.println("该文件内没有信息!");
             emptyFile(path);
         }
@@ -54,11 +55,11 @@ public class Files extends Drawing {
             var output = new DataOutputStream(new FileOutputStream(DrawingService.getPath()));
             for (DrawingService draw: idOut) {
                 output.writeBytes(draw.getId() + "  ");
-                lines++;
+                numbers++;
 
-                if (lines == 5) {
+                if (numbers == 5) {
                     output.writeBytes("\n");
-                    lines = 0;
+                    numbers = 0;
                 }
             }
         } catch (IOException e) {
@@ -82,14 +83,14 @@ public class Files extends Drawing {
         }
     }
 
-    public static String fileNameSet(String name) {
+    private static String fileNameSet(String name) {
         var date = new Date();
         var sdf = new SimpleDateFormat("yyyy-MM-dd HHmmss");
         return name == null ? sdf.format(date) : name;
     }
 
     private static void emptyFile(String path) {
-        System.out.print("修改文件并保存后按回车继续(更换文件请在后面输入路径) > ");
+        System.out.print("修改文件并保存后按回车继续(更换文件请在后面输入路径) >\040");
         path = Utility.readString(path);
         InputIds(path);
     }
