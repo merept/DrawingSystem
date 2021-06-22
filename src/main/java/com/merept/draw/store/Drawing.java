@@ -21,7 +21,7 @@ public class Drawing {
     private static String path = USER + "\\sources\\input.txt";
 
     public static void byFile() {
-        System.out.print("请输入文件路径(直接回车将使用默认路径) >\040");
+        System.out.print("请输入文件路径或拖入文件(直接回车将使用默认路径) >\040");
         path = Utility.readString(path);
 
         Files.InputIds(path);

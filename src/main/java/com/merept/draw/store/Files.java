@@ -20,6 +20,8 @@ public class Files extends Drawing {
     private static int numbers = 0;
 
     public static void InputIds(String path) {
+        path = checkFileName(path);
+
         System.out.println("\n" + path + "\n");
 
         try {
@@ -80,6 +82,14 @@ public class Files extends Drawing {
         } catch (IOException e) {
             System.out.println("找不到该文件");
         }
+    }
+
+    private static String checkFileName(String path) {
+        if (path.charAt(0) != '\"') return path;
+        StringBuilder returnPath = new StringBuilder();
+        for (int i = 1; i < path.length() - 1; i++)
+            returnPath.append(path.charAt(i));
+        return returnPath.toString();
     }
 
     private static String fileNameSet(String name) {

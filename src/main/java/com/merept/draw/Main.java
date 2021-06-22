@@ -21,5 +21,7 @@ public class Main {
         System.out.println("是否需要现在查看结果?");
         var slt = Utility.readConfirmSelection();
         if (slt == 'Y') Files.printResults(DrawingService.getPath());
+        System.out.println("\n回车退出...");
+        Utility.readEnter();
     }
 }

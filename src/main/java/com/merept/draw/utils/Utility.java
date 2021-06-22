@@ -11,6 +11,7 @@ import java.util.Scanner;
  * @author MerePT
  * @version 1.0
  */
+@SuppressWarnings(value = "all")
 public class Utility {
     //静态属性。。。
     private static final Scanner scanner = new Scanner(System.in);
@@ -21,12 +22,12 @@ public class Utility {
      *
      * @return 1——5
      */
-    public static char readMenuSelection() {
-        char c;
+    public static int readMenuSelection(int i) {
+        var c = 0;
         for (; ; ) {
-            String str = readKeyBoard(1, false);//包含一个字符的字符串
-            c = str.charAt(0);//将字符串转换成字符char类型
-            if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5' && c != '6' && c != '7' && c != '0') {
+            String str = readKeyBoard(2, false);//包含一个字符的字符串
+            c = Integer.parseInt(str);//将字符串转换成字符char类型
+            if (c <= 0 || c >= i) {
                 System.out.print("输入错误, 请重新输入 > ");
             } else break;
         }

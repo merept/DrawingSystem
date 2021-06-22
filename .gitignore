@@ -1,3 +1,5 @@
 # 项目排除路径
 /out/
 /test sources/
+/src/main/java/META-INF/
+/packges/
