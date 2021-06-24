@@ -1,19 +1,9 @@
 package com.merept.draw.store;
 
-import com.merept.draw.service.DrawingService;
 import com.merept.draw.utils.Utility;
 
 import java.io.*;
 
-/**
- * <p>所属包名: com.merept.draw.store</p>
- * <p>项目名称: DrawingSystem</p>
- * <p>文件名称: OutputPathChange</p>
- * <p>创建时间: 2021/6/24</p>
- *
- * @author MerePT
- * @version 1.0
- */
 public class OutputPathChange {
     private static final String USER = System.getProperty("user.dir");
     private static final String LOG = USER + "\\sources\\log.txt";

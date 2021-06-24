@@ -5,15 +5,6 @@ import com.merept.draw.utils.Utility;
 
 import java.util.ArrayList;
 
-/**
- * <p>所属包名: com.merept.draw.store</p>
- * <p>项目名称: RandomDrawSys</p>
- * <p>文件名称: Drawing</p>
- * <p>创建时间: 2021/6/15</p>
- *
- * @author MerePT
- * @version 1.0
- */
 public class Drawing {
     protected static final ArrayList<DrawingService> idIn = new ArrayList<>();
     protected static final ArrayList<DrawingService> idOut = new ArrayList<>();

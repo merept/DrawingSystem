@@ -1,22 +1,12 @@
 package com.merept.draw.store;
 
 import com.merept.draw.service.DrawingService;
-import com.merept.draw.utils.Theme;
 import com.merept.draw.utils.Utility;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * <p>所属包名: com.merept.draw.store</p>
- * <p>项目名称: RandomDrawSys</p>
- * <p>文件名称: Files</p>
- * <p>创建时间: 2021/6/15</p>
- *
- * @author MerePT
- * @version 1.0
- */
 public class Files extends Drawing {
     private static int numbers = 0;
     private static final String USER = System.getProperty("user.dir");

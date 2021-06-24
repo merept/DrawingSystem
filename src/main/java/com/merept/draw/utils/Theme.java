@@ -2,13 +2,6 @@ package com.merept.draw.utils;
 
 import java.util.Collections;
 
-/**
- * <p>文件名称: Theme</p>
- * <p>创建时间: 2021/5/19</p>
- *
- * @author MerePT
- * @version 1.0
- */
 public class Theme {
     public static String theLine = "-";
     private static final String shortLine = "-";

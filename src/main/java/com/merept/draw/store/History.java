@@ -6,15 +6,6 @@ import com.merept.draw.utils.Utility;
 import java.io.*;
 import java.util.ArrayList;
 
-/**
- * <p>所属包名: com.merept.draw.store</p>
- * <p>项目名称: DrawingSystem</p>
- * <p>文件名称: History</p>
- * <p>创建时间: 2021/6/24</p>
- *
- * @author MerePT
- * @version 1.0
- */
 public class History {
     private static final String path = OutputPathChange.PATH + "history.txt";
     private static ArrayList<String> history = new ArrayList<>();
