@@ -1,5 +1,7 @@
 package com.merept.draw.service;
 
+import com.merept.draw.store.OutputPathChange;
+
 /**
  * <p>所属包名: com.merept.draw.service</p>
  * <p>项目名称: RandomDrawSys</p>
@@ -12,14 +14,16 @@ package com.merept.draw.service;
 public class DrawingService {
     private static final String USER = System.getProperty("user.dir");
     private String id;
-    public static String path;
+    private static String outputPath;
+    private static String inputPath;
 
     public DrawingService(String id) {
         this.id = id;
     }
 
-    public DrawingService(String path, char c) {
-        DrawingService.path = path;
+    public DrawingService(String path, int i) {
+        if (i == 1) inputPath = path;
+        else if (i == 2) outputPath = path;
         setPath();
     }
 
@@ -28,10 +32,14 @@ public class DrawingService {
     }
 
     private void setPath() {
-        path = USER + "\\results\\" + path + ".txt";
+        outputPath = OutputPathChange.PATH + outputPath + ".txt";
     }
 
-    public static String getPath() {
-        return path;
+    public static String getOutputPath() {
+        return outputPath;
+    }
+
+    public static String getInputPath() {
+        return inputPath;
     }
 }

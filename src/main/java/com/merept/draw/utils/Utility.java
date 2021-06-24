@@ -27,7 +27,7 @@ public class Utility {
         for (; ; ) {
             String str = readKeyBoard(2, false);//包含一个字符的字符串
             c = Integer.parseInt(str);//将字符串转换成字符char类型
-            if (c <= 0 || c >= i) {
+            if (c < 0 || c > i) {
                 System.out.print("输入错误, 请重新输入 > ");
             } else break;
         }

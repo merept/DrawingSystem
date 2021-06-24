@@ -1,6 +1,7 @@
 package com.merept.draw.store;
 
 import com.merept.draw.service.DrawingService;
+import com.merept.draw.utils.Theme;
 import com.merept.draw.utils.Utility;
 
 import java.io.*;
@@ -18,8 +19,19 @@ import java.util.Date;
  */
 public class Files extends Drawing {
     private static int numbers = 0;
+    private static final String USER = System.getProperty("user.dir");
+    private static String path = USER + "\\sources\\input.txt";
 
-    public static void InputIds(String path) {
+    public static String setPath() {
+        System.out.print("\n请输入文件路径或拖入文件(直接回车将使用默认路径) >\040");
+        path = Utility.readString(path);
+        path = InputIds(path);
+        System.out.println("文件读取完成, 回车继续...");
+        Utility.readEnter();
+        return path;
+    }
+
+    public static String InputIds(String path) {
         path = checkFileName(path);
 
         System.out.println("\n" + path + "\n");
@@ -41,6 +53,7 @@ public class Files extends Drawing {
             System.out.println("该文件内没有信息!");
             emptyFile(path);
         }
+        return path;
     }
 
     public static void OutputIds() {
@@ -50,10 +63,11 @@ public class Files extends Drawing {
                 请输入结果输出文件的文件名(直接回车将使用默认命名) >\040""");
         var name = Utility.readString(null);
         name = fileNameSet(name);
-        new DrawingService(name, 'c');
+        History.writeHistory(name);
+        new DrawingService(name, 2);
 
         try {
-            var output = new DataOutputStream(new FileOutputStream(DrawingService.getPath()));
+            var output = new DataOutputStream(new FileOutputStream(DrawingService.getOutputPath()));
             for (DrawingService draw: idOut) {
                 output.writeBytes(draw.getId() + "  ");
                 numbers++;
@@ -67,7 +81,7 @@ public class Files extends Drawing {
             System.out.println("找不到该输出文件");
         }
 
-        System.out.println("\n抽签结果已存入 " + DrawingService.getPath() + " 中。\n");
+        System.out.println("\n抽签结果已存入 " + DrawingService.getOutputPath() + " 中。\n");
     }
 
     public static void printResults(String path) {

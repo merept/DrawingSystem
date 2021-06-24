@@ -17,15 +17,22 @@ import java.util.ArrayList;
 public class Drawing {
     protected static final ArrayList<DrawingService> idIn = new ArrayList<>();
     protected static final ArrayList<DrawingService> idOut = new ArrayList<>();
-    private static final String USER = System.getProperty("user.dir");
-    private static String path = USER + "\\sources\\input.txt";
+
+    public static void enter() {
+        if (idIn.isEmpty()) {
+            System.out.println("\n请先设置输入路径!回车继续");
+            Utility.readEnter();
+            return;
+        }
+        Drawing.byFile();
+        System.out.println("是否需要现在查看结果?");
+        var slt = Utility.readConfirmSelection();
+        if (slt == 'Y') Files.printResults(DrawingService.getOutputPath());
+        System.out.println("\n回车继续...");
+        Utility.readEnter();
+    }
 
     public static void byFile() {
-        System.out.print("请输入文件路径或拖入文件(直接回车将使用默认路径) >\040");
-        path = Utility.readString(path);
-
-        Files.InputIds(path);
-
         System.out.println("文件读取完成, 是否有需要删除的?");
         var slt = Utility.readConfirmSelection();
         if (slt == 'Y') removeId();
