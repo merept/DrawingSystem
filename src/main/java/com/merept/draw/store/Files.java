@@ -16,24 +16,31 @@ public class Files extends Drawing {
         System.out.print("\n请输入文件路径或拖入文件(直接回车将使用默认路径) >\040");
         path = Utility.readString(path);
         path = InputIds(path);
+        if (path.equals("请先设置输入路径!")) return path;
         System.out.println("文件读取完成, 回车继续...");
         Utility.readEnter();
         return path;
     }
 
     public static String InputIds(String path) {
+        idIn.clear();
         path = checkFileName(path);
+        File file = new File(path);
+        if (!file.exists()) {
+            System.out.println("\n该文件不存在!回车继续...");
+            Utility.readEnter();
+            return "请先设置输入路径!";
+        }
 
         System.out.println("\n" + path + "\n");
 
         try {
-            var input = new DataInputStream(new FileInputStream(path));
-            BufferedReader d  = new BufferedReader(new InputStreamReader(input));
+            BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
 
             var count = "";
-            while ((count = d.readLine()) != null) {
+            while ((count = input.readLine()) != null)
                 idIn.add(new DrawingService(count));
-            }
+            input.close();
         } catch (IOException e) {
             System.out.println("找不到该文件");
             emptyFile(path);
@@ -53,20 +60,22 @@ public class Files extends Drawing {
                 请输入结果输出文件的文件名(直接回车将使用默认命名) >\040""");
         var name = Utility.readString(null);
         name = fileNameSet(name);
-        History.writeHistory(name);
         new DrawingService(name, 2);
+        checkRepeatName(name);
 
         try {
-            var output = new DataOutputStream(new FileOutputStream(DrawingService.getOutputPath()));
+            var path = DrawingService.getOutputPath();
+            BufferedWriter output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path)));
             for (DrawingService draw: idOut) {
-                output.writeBytes(draw.getId() + "  ");
+                output.write(draw.getId() + "  ");
                 numbers++;
 
                 if (numbers == 5) {
-                    output.writeBytes("\n");
+                    output.write("\n");
                     numbers = 0;
                 }
             }
+            output.close();
         } catch (IOException e) {
             System.out.println("找不到该输出文件");
         }
@@ -74,15 +83,27 @@ public class Files extends Drawing {
         System.out.println("\n抽签结果已存入 " + DrawingService.getOutputPath() + " 中。\n");
     }
 
+    private static void checkRepeatName(String name) {
+        File check = new File(DrawingService.getOutputPath());
+        StringBuilder nameBuilder = new StringBuilder(name);
+        while (check.exists()) {
+            var i = 1;
+            nameBuilder.append(" (").append(i).append(")");
+            new DrawingService(nameBuilder.toString(), 2);
+            check = new File(DrawingService.getOutputPath());
+        }
+    }
+
     public static void printResults(String path) {
         try {
-            var results = new DataInputStream(new FileInputStream(path));
-            BufferedReader d  = new BufferedReader(new InputStreamReader(results));
+            BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
 
             var count = "";
-            while ((count = d.readLine()) != null) {
+            while ((count = input.readLine()) != null) {
                 System.out.println(count);
             }
+
+            input.close();
         } catch (IOException e) {
             System.out.println("找不到该文件");
         }

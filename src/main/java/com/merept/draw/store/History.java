@@ -7,56 +7,56 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class History {
-    private static final String path = OutputPathChange.PATH + "history.txt";
     private static ArrayList<String> history = new ArrayList<>();
 
     public static void historyList() {
         System.out.println("\n" + Theme.getTheLine() + "\n");
         var i = 1;
-        try {
-            var read = new DataInputStream(new FileInputStream(path));
-            BufferedReader d = new BufferedReader(new InputStreamReader(read));
+        File file = new File(OutputPathChange.PATH);
+        File[] files = file.listFiles();
 
-            var count = "";
-            while ((count = d.readLine()) != null) {
-                System.out.println(i + "." + count);
-                history.add(count);
-                i++;
-            }
-        } catch (IOException e) {
-            System.out.println("找不到文件!");
+        if (files == null || files.length == 0) {
+            System.out.printf("""
+                    当前没有历史记录!
+                    
+                    %s
+                    回车继续...
+                    """, Theme.getTheLine());
+            Utility.readEnter();
+            return;
         }
-        System.out.println("\n" + Theme.getTheLine() + "\n");
+
+        for (File f: files) {
+            System.out.println(i + "." + f.getName());
+            history.add(f.getName());
+            i++;
+        }
+
+        System.out.println("0.清空记录\n\n" + Theme.getTheLine() + "\n");
         System.out.print("输入要查看的历史 >\040");
         readHistory();
         System.out.println("回车继续...");
         Utility.readEnter();
     }
 
-    public static void writeHistory(String name) {
-        try {
-            var output = new DataOutputStream(new FileOutputStream(path, true));
-            output.writeBytes(name + "\n");
-        } catch (IOException e) {
-            System.out.println("找不到该文件!");
-        }
-    }
-
     private static void readHistory() throws IndexOutOfBoundsException {
         var slt = Utility.readMenuSelection(history.size());
-        var path = OutputPathChange.PATH + history.get(slt - 1) + ".txt";
+        if (slt == 0) {
+            clearHistory();
+            return;
+        }
+        var path = OutputPathChange.PATH + history.get(slt - 1);
         Files.printResults(path);
     }
 
     @SuppressWarnings(value = "all")
     public static void clearHistory() {
         if (OutputPathChange.PATH.equals("请先设置输出目录!")) return;
-        try {
-            var output = new DataOutputStream(new FileOutputStream(path));
-            output.writeBytes("");
-        } catch (IOException e) {
-            System.out.println("找不到该文件!");
+        File file = new File(OutputPathChange.PATH);
+        File[] files = file.listFiles();
+        for (File f: files) {
+            if (f.getName().equals("history.txt")) continue;
+            f.delete();
         }
-
     }
 }

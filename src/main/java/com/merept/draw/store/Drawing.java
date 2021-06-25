@@ -21,6 +21,8 @@ public class Drawing {
         if (slt == 'Y') Files.printResults(DrawingService.getOutputPath());
         System.out.println("\n回车继续...");
         Utility.readEnter();
+
+        idOut.clear();
     }
 
     public static void byFile() {

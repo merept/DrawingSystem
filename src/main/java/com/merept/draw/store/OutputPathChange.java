@@ -24,11 +24,12 @@ public class OutputPathChange {
 
     public static void readLog() {
         try {
-            var path = new DataInputStream(new FileInputStream(LOG));
-            BufferedReader d = new BufferedReader(new InputStreamReader(path));
+            BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(LOG)));
 
             var count = "";
-            while ((count = d.readLine()) != null) PATH = count;
+            while ((count = input.readLine()) != null) PATH = count;
+
+            input.close();
         } catch (IOException e) {
             System.out.println("找不到文件!");
         }
@@ -40,9 +41,11 @@ public class OutputPathChange {
         try {
             var dir = new File(PATH);
             if (!dir.exists()) dir.mkdirs();
-            var output = new DataOutputStream(new FileOutputStream(LOG));
+            BufferedWriter output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(LOG)));
             if (PATH.charAt(PATH.length() - 1) != '\\') PATH += "\\";
-            output.writeBytes(PATH);
+            output.write(PATH);
+
+            output.close();
         } catch (IOException e) {
             System.out.println("找不到该文件!");
         }
