@@ -1,5 +1,6 @@
 package com.merept.draw.store;
 
+import com.merept.draw.main.Menu;
 import com.merept.draw.service.DrawingService;
 import com.merept.draw.utils.Utility;
 
@@ -9,8 +10,7 @@ import java.util.Date;
 
 public class Files extends Drawing {
     private static int numbers = 0;
-    private static final String USER = System.getProperty("user.dir");
-    private static String path = USER + "\\sources\\input.txt";
+    private static String path = Menu.inputPath;
 
     public static String setPath() {
         System.out.print("\n请输入文件路径或拖入文件(直接回车将使用默认路径) >\040");
@@ -34,17 +34,7 @@ public class Files extends Drawing {
 
         System.out.println("\n" + path + "\n");
 
-        try {
-            BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
-
-            var count = "";
-            while ((count = input.readLine()) != null)
-                idIn.add(new DrawingService(count));
-            input.close();
-        } catch (IOException e) {
-            System.out.println("找不到该文件");
-            emptyFile(path);
-        }
+        input(path);
 
         if (idIn.isEmpty()) {
             System.out.println("该文件内没有信息!");
@@ -53,9 +43,33 @@ public class Files extends Drawing {
         return path;
     }
 
+    public static void beginInput(String path) {
+        idIn.clear();
+        if (path.equals("请先设置输入路径!")) return;
+
+        path = checkFileName(path);
+
+        input(path);
+
+        ReduceRate.readLatest();
+    }
+
+    private static void input(String path) {
+        try {
+            BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+
+            var count = "";
+            while ((count = input.readLine()) != null) idIn.add(new DrawingService(count));
+            input.close();
+        } catch (IOException e) {
+            System.out.println("找不到该文件");
+            emptyFile(path);
+        }
+    }
+
     public static void OutputIds() {
         System.out.print("""
-                
+                                
                 抽签已完成!
                 请输入结果输出文件的文件名(直接回车将使用默认命名) >\040""");
         var name = Utility.readString(null);
@@ -66,7 +80,7 @@ public class Files extends Drawing {
         try {
             var path = DrawingService.getOutputPath();
             BufferedWriter output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path)));
-            for (DrawingService draw: idOut) {
+            for (DrawingService draw : idOut) {
                 output.write(draw.getId() + "  ");
                 numbers++;
 
@@ -75,6 +89,7 @@ public class Files extends Drawing {
                     numbers = 0;
                 }
             }
+            ReduceRate.writeLatest();
             output.close();
         } catch (IOException e) {
             System.out.println("找不到该输出文件");
@@ -109,7 +124,7 @@ public class Files extends Drawing {
         }
     }
 
-    private static String checkFileName(String path) {
+    public static String checkFileName(String path) {
         if (path.charAt(0) != '\"') return path;
         StringBuilder returnPath = new StringBuilder();
         for (int i = 1; i < path.length() - 1; i++)

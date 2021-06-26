@@ -31,11 +31,12 @@ public class Drawing {
         if (slt == 'Y') removeId();
 
         System.out.printf("""
-                
+                                
                 共计 %d 人
                 输入需要抽的人数 >\040""", idIn.size());
         var i = Utility.readInt();
-        for (int j = 0; j < i; j++) drawPeople();
+        for (int j = 0; j < i; j++)
+            drawPeople();
 
         Files.OutputIds();
     }
@@ -44,10 +45,11 @@ public class Drawing {
         var ran = idIn.size();
         var num = (int) (Math.random() * ran);
         var id = checkRepeatValue(num, ran);
+        id = ReduceRate.reducing(id, ran);
         idOut.add(new DrawingService(id));
     }
 
-    private static String checkRepeatValue(int num, int ran) {
+    public static String checkRepeatValue(int num, int ran) {
         if (idOut.isEmpty()) return idIn.get(num).getId();
         for (int i = 0; i < idOut.size(); i++) {
             var id = idIn.get(num).getId();

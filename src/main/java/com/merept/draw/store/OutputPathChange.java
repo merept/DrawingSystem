@@ -1,21 +1,16 @@
 package com.merept.draw.store;
 
+import com.merept.draw.main.Main;
 import com.merept.draw.utils.Utility;
 
 import java.io.*;
 
 public class OutputPathChange {
-    private static final String USER = System.getProperty("user.dir");
-    private static final String LOG = USER + "\\sources\\log.txt";
+    private static final String LOG = Main.USER + "\\sources\\log.txt";
     public static String PATH;
 
     public static void enter() {
         readLog();
-        System.out.print("更改输出目录将会清空历史记录!\n" +
-                "是否继续更改？");
-        var slt = Utility.readConfirmSelection();
-        if (slt == 'N') return;
-        History.clearHistory();
         System.out.print("请输入需要设置的新路径(直接回车将不会重新设置) >\040");
         PATH = Utility.readString(PATH);
         if (PATH.equals("请先设置输出目录!")) return;
@@ -36,7 +31,7 @@ public class OutputPathChange {
         if (PATH == null) PATH = "请先设置输出目录!";
     }
 
-    @SuppressWarnings(value = "all")
+    @SuppressWarnings (value = "all")
     private static void writeLog() {
         try {
             var dir = new File(PATH);

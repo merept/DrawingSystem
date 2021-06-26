@@ -3,7 +3,7 @@ package com.merept.draw.store;
 import com.merept.draw.utils.Theme;
 import com.merept.draw.utils.Utility;
 
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 
 public class History {
@@ -18,7 +18,7 @@ public class History {
         if (files == null || files.length == 0) {
             System.out.printf("""
                     当前没有历史记录!
-                    
+                                        
                     %s
                     回车继续...
                     """, Theme.getTheLine());
@@ -26,14 +26,14 @@ public class History {
             return;
         }
 
-        for (File f: files) {
+        for (File f : files) {
             System.out.println(i + "." + f.getName());
             history.add(f.getName());
             i++;
         }
 
         System.out.println("0.清空记录\n\n" + Theme.getTheLine() + "\n");
-        System.out.print("输入要查看的历史 >\040");
+        System.out.print("输入要查看的历史( -1 退出) >\040");
         readHistory();
         System.out.println("回车继续...");
         Utility.readEnter();
@@ -44,17 +44,17 @@ public class History {
         if (slt == 0) {
             clearHistory();
             return;
-        }
+        } else if (slt == -1) return;
         var path = OutputPathChange.PATH + history.get(slt - 1);
         Files.printResults(path);
     }
 
-    @SuppressWarnings(value = "all")
+    @SuppressWarnings (value = "all")
     public static void clearHistory() {
         if (OutputPathChange.PATH.equals("请先设置输出目录!")) return;
         File file = new File(OutputPathChange.PATH);
         File[] files = file.listFiles();
-        for (File f: files) {
+        for (File f : files) {
             if (f.getName().equals("history.txt")) continue;
             f.delete();
         }
