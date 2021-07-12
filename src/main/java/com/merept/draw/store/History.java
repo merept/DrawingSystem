@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class History {
+    @SuppressWarnings(value = "all")
     private static ArrayList<String> history = new ArrayList<>();
 
     public static void historyList() {
@@ -51,7 +52,6 @@ public class History {
 
     @SuppressWarnings (value = "all")
     public static void clearHistory() {
-        if (OutputPathChange.PATH.equals("请先设置输出目录!")) return;
         File file = new File(OutputPathChange.PATH);
         File[] files = file.listFiles();
         for (File f : files) {

@@ -73,10 +73,6 @@ public class ReduceRate {
 
     public static void writeLatest() {
         if (DATA == null) return;
-        for (int i = 0; i < idRate.size(); i++) {
-            var id = idRate.get(i).getId();
-            if (id.charAt(id.length() - 1) == '9') idRate.set(i, new DrawingService(resetRate(id, id.length())));
-        }
         try {
             BufferedWriter data = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DATA)));
             BufferedWriter rate = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(RATE)));
@@ -93,13 +89,10 @@ public class ReduceRate {
         }
     }
 
-    private static String resetRate(String id, int length) {
-        var idChar = id.toCharArray();
-        idChar[length - 1] = '1';
-        return Arrays.toString(idChar).replaceAll("[\\[\\]\\s,]", "");
-    }
-
     public static void resetRateAll() {
+        System.out.println("是否要重置爆率?");
+        var slt = Utility.readConfirmSelection();
+        if (slt == 'N') return;
         try {
             BufferedReader data = new BufferedReader(new InputStreamReader(new FileInputStream(DATA)));
             BufferedWriter rate = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(RATE)));
@@ -153,6 +146,7 @@ public class ReduceRate {
         var idRChar = idR.toCharArray();
         var idRInt = (int) idRChar[idR.length() - 1];
         idRChar[idR.length() - 1] = (char) (idRInt += 1);
+        if (idRChar[idR.length() - 1] == '9') idRChar[idR.length() - 1] = '1';
         idRate.set(i, new DrawingService(Arrays.toString(idRChar).replaceAll("[\\[\\]\\s,]", "")));
     }
 

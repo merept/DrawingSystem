@@ -39,6 +39,7 @@ public class Menu {
     }
 
     private static void setInputPath() {
+        if (!inputPath.equals(ReduceRate.DATA) && !inputPath.equals("请先设置输入路径!")) return;
         if (Mode.modeCode.equals("1")) inputPath = ReduceRate.DATA;
         else if (Mode.modeCode.equals("2")) inputPath = "请先设置输入路径!";
     }
