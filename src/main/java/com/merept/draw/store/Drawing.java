@@ -4,10 +4,11 @@ import com.merept.draw.service.DrawingService;
 import com.merept.draw.utils.Utility;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Drawing {
     protected static final ArrayList<DrawingService> idIn = new ArrayList<>();
-    protected static final ArrayList<DrawingService> idOut = new ArrayList<>();
+    protected static final HashSet<DrawingService> idOut = new HashSet<>();
 
     public static void enter() {
         if (idIn.isEmpty()) {
@@ -51,13 +52,8 @@ public class Drawing {
 
     public static String checkRepeatValue(int num, int ran) {
         if (idOut.isEmpty()) return idIn.get(num).getId();
-        for (int i = 0; i < idOut.size(); i++) {
-            var id = idIn.get(num).getId();
-            if (id.equals(idOut.get(i).getId())) {
-                num = (int) (Math.random() * ran);
-                i = 0;
-            }
-        }
+        while (idOut.contains(new DrawingService(idIn.get(num).getId())))
+            num = (int) (Math.random() * ran);
         return idIn.get(num).getId();
     }
 

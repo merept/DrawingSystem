@@ -112,8 +112,7 @@ public class ReduceRate {
 
     public static String reducing(String id, int ran) {
         if (DATA == null) return id;
-        int i;
-        for (i = 0; i < idData.size(); i++) {
+        for (int i = 0; i < idData.size(); i++) {
             if (id.equals(idData.get(i).getId())) {
                 id = drawAgain(i, ran);
                 break;

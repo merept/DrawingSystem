@@ -8,7 +8,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Files extends Drawing {
+public class Files {
     private static int numbers = 0;
     private static String path = Menu.inputPath;
 
@@ -23,7 +23,7 @@ public class Files extends Drawing {
     }
 
     public static String InputIds(String path) {
-        idIn.clear();
+        Drawing.idIn.clear();
         path = checkFileName(path);
         File file = new File(path);
         if (!file.exists()) {
@@ -36,7 +36,7 @@ public class Files extends Drawing {
 
         input(path);
 
-        if (idIn.isEmpty()) {
+        if (Drawing.idIn.isEmpty()) {
             System.out.println("该文件内没有信息!");
             emptyFile(path);
         }
@@ -44,13 +44,10 @@ public class Files extends Drawing {
     }
 
     public static void beginInput(String path) {
-        idIn.clear();
+        Drawing.idIn.clear();
         if (path.equals("请先设置输入路径!")) return;
-
         path = checkFileName(path);
-
         input(path);
-
         ReduceRate.readLatest();
     }
 
@@ -59,7 +56,7 @@ public class Files extends Drawing {
             BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
 
             var count = "";
-            while ((count = input.readLine()) != null) idIn.add(new DrawingService(count));
+            while ((count = input.readLine()) != null) Drawing.idIn.add(new DrawingService(count));
             input.close();
         } catch (IOException e) {
             System.out.println("找不到该文件");
@@ -80,7 +77,7 @@ public class Files extends Drawing {
         try {
             var path = DrawingService.getOutputPath();
             BufferedWriter output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path)));
-            for (DrawingService draw : idOut) {
+            for (DrawingService draw : Drawing.idOut) {
                 output.write(draw.getId() + "  ");
                 numbers++;
 

@@ -12,10 +12,7 @@ public class Menu {
         for (; ; ) {
             if (Mode.modeCode.equals("1")) mode = "团队模式";
             else if (Mode.modeCode.equals("2")) mode = "单次模式";
-            setInputPath();
-            ReduceRate.readLatest();
-            Files.beginInput(inputPath);
-            OutputPathChange.readLog();
+            reading();
             System.out.printf("""
                     %s
 
@@ -36,6 +33,13 @@ public class Menu {
             var slt = selecting();
             if (slt == 0) break;
         }
+    }
+
+    private static void reading() {
+        setInputPath();
+        ReduceRate.readLatest();
+        Files.beginInput(inputPath);
+        OutputPathChange.readLog();
     }
 
     private static void setInputPath() {

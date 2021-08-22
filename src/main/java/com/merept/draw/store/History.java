@@ -52,11 +52,16 @@ public class History {
 
     @SuppressWarnings (value = "all")
     public static void clearHistory() {
+        System.out.println("是否要清空记录?");
+        var slt = Utility.readConfirmSelection();
+        if (slt == 'N') return;
         File file = new File(OutputPathChange.PATH);
         File[] files = file.listFiles();
         for (File f : files) {
             if (f.getName().equals("history.txt")) continue;
             f.delete();
         }
+        System.out.println("清空成功!\n");
+        ReduceRate.resetRateAll();
     }
 }
